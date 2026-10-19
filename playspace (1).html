@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlaySpace — Your Link Hub</title>
+<style>
+:root{--bg:#0b1020;--panel:#141b31;--panel2:#1a2340;--text:#f4f6ff;--muted:#aab4d0;--accent:#7c5cff;--cyan:#42d9ff;--border:rgba(255,255,255,.1)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#202653 0%,transparent 40%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;min-height:100vh}
+header{max-width:1150px;margin:auto;padding:24px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:1.3rem;letter-spacing:.2px}.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--cyan));color:white;font-size:22px;box-shadow:0 8px 28px #6e59ff44}
+.header-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button,.button{border:0;border-radius:12px;padding:11px 15px;font-weight:750;cursor:pointer;color:white;background:linear-gradient(135deg,var(--accent),#5b83ff);transition:transform .15s,opacity .15s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+button:hover,.button:hover{transform:translateY(-1px);opacity:.94}.secondary{background:#ffffff0c;border:1px solid var(--border);color:var(--text)}.danger{background:#542c40;border:1px solid #8e4562}
+main{max-width:1150px;margin:auto;padding:8px 22px 60px}
+.hero{padding:42px 34px;border:1px solid var(--border);border-radius:28px;background:linear-gradient(120deg,#272a5cdd,#172b48dd);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;right:-50px;top:-100px;background:#55d8ff1b;filter:blur(2px)}
+.eyebrow{color:var(--cyan);text-transform:uppercase;letter-spacing:2px;font-size:.75rem;font-weight:850}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.06;letter-spacing:-1.5px;margin:13px 0}.hero p{color:#c4cbea;max-width:560px;line-height:1.65;margin-bottom:22px}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:24px 0}.search{flex:1;min-width:210px}
+input,select,textarea{width:100%;padding:12px 13px;background:#0d1428;border:1px solid var(--border);border-radius:11px;color:var(--text);font:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#8170ff;box-shadow:0 0 0 3px #8170ff22}
+.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{background:#ffffff09;border:1px solid var(--border);color:var(--muted);padding:9px 13px}.filter.active{background:#7c5cff2b;border-color:#8876ff;color:white}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:30px 0 14px}.section-head h2{font-size:1.2rem;margin:0}.count{color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:15px}
+.card{border:1px solid var(--border);background:linear-gradient(160deg,#18213a,#11182b);border-radius:18px;overflow:hidden;min-width:0;transition:transform .18s,border-color .18s}
+.card:hover{transform:translateY(-3px);border-color:#7770d8}
+.thumb{height:112px;display:flex;align-items:center;justify-content:center;font-size:42px;background:linear-gradient(135deg,#4937a8,#1c8db2);position:relative}
+.thumb.games{background:linear-gradient(135deg,#633fd0,#2177a4)}.thumb.videos{background:linear-gradient(135deg,#a53c8b,#e17a43)}.thumb.other{background:linear-gradient(135deg,#287b78,#3e4d9e)}
+.thumb img{width:100%;height:100%;object-fit:cover}.card-body{padding:14px}.tag{display:inline-block;font-size:.7rem;letter-spacing:.6px;text-transform:uppercase;color:#bfc8ff;background:#7c5cff2b;border-radius:7px;padding:5px 7px;font-weight:800}
+.card h3{margin:10px 0 6px;font-size:1.04rem;overflow-wrap:anywhere}.card p{color:var(--muted);font-size:.86rem;line-height:1.45;margin:0 0 13px;overflow-wrap:anywhere}
+.card-actions{display:flex;gap:8px}.card-actions a{flex:1}.card-actions button{padding:9px 11px}
+.empty{border:1px dashed #ffffff2e;border-radius:18px;padding:35px 20px;text-align:center;color:var(--muted);grid-column:1/-1}.empty strong{display:block;color:var(--text);margin-bottom:7px}
+footer{text-align:center;color:#7884a5;padding:15px 20px 30px;font-size:.83rem}
+dialog{border:1px solid var(--border);border-radius:22px;background:#151d34;color:var(--text);width:min(520px,calc(100% - 24px));padding:0;box-shadow:0 25px 90px #0009}
+dialog::backdrop{background:#050814b8;backdrop-filter:blur(5px)}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--border)}.modal-head h2{margin:0;font-size:1.2rem}.modal-body{padding:20px 22px}.field{margin-bottom:15px}.field label{display:block;font-size:.87rem;font-weight:750;color:#dbe1f8;margin-bottom:7px}.help{font-size:.78rem;color:var(--muted);margin-top:6px}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
+@media(max-width:600px){header{padding:18px 15px}main{padding:8px 15px 40px}.hero{padding:30px 22px}.grid{grid-template-columns:1fr 1fr;gap:10px}.thumb{height:85px}.card-body{padding:11px}.card h3{font-size:.95rem}.card p{font-size:.8rem}.card-actions{flex-wrap:wrap}.card-actions a{min-width:100%}}
+@media(max-width:390px){.grid{grid-template-columns:1fr}.header-actions{width:100%}.header-actions button{flex:1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">▶</div><span>PlaySpace</span></div>
+  <div class="header-actions"><button class="secondary" id="exportBtn">↗ Export links</button><button id="addTop">＋ Add a link</button></div>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow">Your personal link hub</div>
+    <h1>All your games.<br>All your videos. One place.</h1>
+    <p>Build your own collection of favorite games, videos, and websites. Add a link, give it a name, and find it here whenever you need it.</p>
+    <button id="heroAdd">＋ Add your first link</button>
+  </section>
+  <div class="toolbar">
+    <div class="search"><input id="search" type="search" placeholder="⌕  Search your links..." aria-label="Search links"></div>
+    <div class="filters" id="filters">
+      <button class="filter active" data-filter="All">All links</button>
+      <button class="filter" data-filter="Games">🎮 Games</button>
+      <button class="filter" data-filter="Videos">▶ Videos</button>
+      <button class="filter" data-filter="Other">🔗 Other</button>
+    </div>
+  </div>
+  <div class="section-head"><h2 id="sectionTitle">Your collection</h2><span class="count" id="count">0 links</span></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>Your links are saved in this browser on this device. Export a backup if you want to keep a copy.</footer>
+
+<dialog id="linkDialog">
+  <form id="linkForm">
+    <div class="modal-head"><h2 id="dialogTitle">Add a link</h2><button class="secondary" type="button" id="closeDialog" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label for="title">Name *</label><input id="title" required maxlength="80" placeholder="e.g. My favorite game"></div>
+      <div class="field"><label for="url">Website URL *</label><input id="url" required type="url" placeholder="https://example.com"><div class="help">Paste the full link, including https://</div></div>
+      <div class="field"><label for="category">Category</label><select id="category"><option>Games</option><option>Videos</option><option>Other</option></select></div>
+      <div class="field"><label for="description">Description (optional)</label><input id="description" maxlength="180" placeholder="A short note about this link"></div>
+      <div class="field"><label for="emoji">Card icon</label><select id="emoji"><option value="🎮">🎮 Game controller</option><option value="▶️">▶️ Play button</option><option value="⚽">⚽ Soccer ball</option><option value="🚗">🚗 Car</option><option value="🎬">🎬 Movie clapper</option><option value="⭐">⭐ Star</option><option value="🌐">🌐 Globe</option><option value="🎨">🎨 Art</option><option value="🧩">🧩 Puzzle</option></select></div>
+      <div class="modal-actions"><button class="secondary" type="button" id="cancelDialog">Cancel</button><button type="submit">Save link</button></div>
+    </div>
+  </form>
+</dialog>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+<script>
+(() => {
+  const STORAGE_KEY = 'playspace-links-v1';
+  const starter = [
+    {id:'demo1',title:'Add your favorite game',url:'https://www.roblox.com/',category:'Games',description:'Replace this example with a game you like.',emoji:'🎮'},
+    {id:'demo2',title:'Add a video',url:'https://www.youtube.com/',category:'Videos',description:'Keep your favorite videos together.',emoji:'▶️'}
+  ];
+  let links = [];
+  let activeFilter = 'All';
+  let editId = null;
+  const $ = id => document.getElementById(id);
+  try { links = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || starter; } catch { links = starter; }
+  const save = () => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(links)); } catch(e) { alert('Could not save in this browser. Export your links as a backup.'); } };
+  const safeUrl = value => { try { const u = new URL(value); return ['http:','https:'].includes(u.protocol) ? u.href : null; } catch { return null; } };
+  function render() {
+    const q = $('search').value.trim().toLowerCase();
+    const filtered = links.filter(x => (activeFilter === 'All' || x.category === activeFilter) &&
+      [x.title,x.description,x.url,x.category].some(v => (v || '').toLowerCase().includes(q)));
+    $('count').textContent = `${filtered.length} ${filtered.length === 1 ? 'link' : 'links'}`;
+    $('sectionTitle').textContent = activeFilter === 'All' ? 'Your collection' : activeFilter;
+    const grid = $('grid');
+    grid.replaceChildren();
+    if (!filtered.length) {
+      const empty = document.createElement('div'); empty.className = 'empty';
+      const strong = document.createElement('strong'); strong.textContent = q ? 'No links found' : 'Nothing here yet';
+      const msg = document.createElement('span'); msg.textContent = q ? 'Try another search or category.' : 'Add a game or video link to get started.';
+      empty.append(strong,msg);
+      if (!q) { const btn=document.createElement('button');btn.style.marginTop='16px';btn.textContent='＋ Add a link';btn.onclick=openAdd;empty.append(document.createElement('br'),btn); }
+      grid.append(empty); return;
+    }
+    filtered.forEach(item => {
+      const card = document.createElement('article'); card.className = 'card';
+      const thumb = document.createElement('div'); thumb.className = 'thumb ' + item.category.toLowerCase();
+      const icon = document.createElement('span'); icon.textContent = item.emoji || (item.category === 'Videos' ? '▶️' : '🎮'); thumb.append(icon);
+      const body = document.createElement('div'); body.className = 'card-body';
+      const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = item.category;
+      const h = document.createElement('h3'); h.textContent = item.title;
+      const p = document.createElement('p'); p.textContent = item.description || new URL(item.url).hostname;
+      const actions = document.createElement('div'); actions.className = 'card-actions';
+      const link = document.createElement('a'); link.className='button'; link.href=item.url; link.target='_blank'; link.rel='noopener noreferrer'; link.textContent='Open link ↗';
+      const edit = document.createElement('button'); edit.className='secondary'; edit.textContent='Edit'; edit.onclick=()=>openEdit(item.id);
+      const del = document.createElement('button'); del.className='danger'; del.textContent='×'; del.title='Delete link'; del.setAttribute('aria-label','Delete '+item.title); del.onclick=()=>removeLink(item.id);
+      actions.append(link,edit,del); body.append(tag,h,p,actions); card.append(thumb,body); grid.append(card);
+    });
+  }
+  function openAdd(){ editId=null; $('linkForm').reset(); $('dialogTitle').textContent='Add a link'; $('linkDialog').showModal(); $('title').focus(); }
+  function openEdit(id){ const x=links.find(v=>v.id===id); if(!x)return; editId=id; $('title').value=x.title; $('url').value=x.url; $('category').value=x.category; $('description').value=x.description||''; $('emoji').value=x.emoji||'🎮'; $('dialogTitle').textContent='Edit link'; $('linkDialog').showModal(); }
+  function removeLink(id){ const x=links.find(v=>v.id===id); if(!x)return; if(confirm(`Delete "${x.title}" from your collection?`)){links=links.filter(v=>v.id!==id);save();render();} }
+  $('addTop').onclick=$('heroAdd').onclick=openAdd;
+  $('closeDialog').onclick=$('cancelDialog').onclick=()=>$('linkDialog').close();
+  $('search').addEventListener('input',render);
+  $('filters').addEventListener('click',e=>{const b=e.target.closest('button[data-filter]');if(!b)return;activeFilter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render();});
+  $('linkForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const url=safeUrl($('url').value.trim()); if(!url){alert('Please enter a valid http:// or https:// link.');return;}
+    const data={id:editId||('link-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)),title:$('title').value.trim(),url,category:$('category').value,description:$('description').value.trim(),emoji:$('emoji').value};
+    if(!data.title){$('title').focus();return;}
+    if(editId) links=links.map(x=>x.id===editId?data:x); else links.unshift(data);
+    save(); $('linkDialog').close(); activeFilter='All';document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x.dataset.filter==='All'));render();
+  });
+  $('exportBtn').onclick=()=>{
+    const blob=new Blob([JSON.stringify(links,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='playspace-links-backup.json';a.click();URL.revokeObjectURL(a.href);
+  };
+  // Import a previous backup through a keyboard shortcut: Ctrl/Cmd+O is intentionally not overridden.
+  const importBtn=document.createElement('button');importBtn.className='secondary';importBtn.textContent='↙ Import backup';importBtn.title='Restore links from a PlaySpace JSON backup';document.querySelector('.header-actions').prepend(importBtn);
+  importBtn.onclick=()=>$('importFile').click();
+  $('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!Array.isArray(data)||!data.every(x=>x&&typeof x.title==='string'&&safeUrl(x.url))){throw Error('invalid');}if(confirm(`Import ${data.length} links? This will replace the links currently saved in this browser.`)){links=data.map(x=>({...x,id:x.id||('link-'+Date.now()+Math.random())}));save();render();}}catch{alert('That file does not look like a valid PlaySpace backup.');}e.target.value='';});
+  save(); render();
+})();
+</script>
+</body>
+</html>
